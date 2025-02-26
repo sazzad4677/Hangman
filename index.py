@@ -5,44 +5,41 @@ from hangman_words import words
 print(logo)
 
 lives = 6
-chosenWord = random.choice(words)
-placeholder = ""
-
-for _ in range(len(chosenWord)):
-    placeholder += "_"
+chosen_word = random.choice(words)
+placeholder = "_" * len(chosen_word)
 
 print(placeholder)
 
-gameOver = False
+game_over = False
 
-correctLetters = []
+correct_letters = []
 
-while not gameOver:
+while not game_over:
     print(f'********************************************* {lives} / 6 LIVES LEFT ********************************************* ')
-    guessedLetters = input("Guess a letter: ").lower()
-    if guessedLetters in correctLetters:
-        print(f"You guessed the letter: {guessedLetters}")
+    guessed_letters = input("Guess a letter: ").lower()
+    if guessed_letters in correct_letters:
+        print(f"You guessed the letter: {guessed_letters}")
     
     display = ""
-    for letter in chosenWord:
-        if letter == guessedLetters:
+    for letter in chosen_word:
+        if letter == guessed_letters:
             display += letter
-            correctLetters.append(letter)
-        elif letter in correctLetters:
+            correct_letters.append(letter)
+        elif letter in correct_letters:
             display += letter
         else:
             display += "_"
     print(display)
     
-    if guessedLetters not in chosenWord:
+    if guessed_letters not in chosen_word:
         lives -= 1
-        print(f"You guessed {guessedLetters}, that's not in the word. You lose a life.")
+        print(f"You guessed {guessed_letters}, that's not in the word. You lose a life.")
         if lives == 0:
-            gameOver = True
-            print(f"********************************************* OOPS, YOU LOST! It was {chosenWord} **********************************************")
+            game_over = True
+            print(f"********************************************* OOPS, YOU LOST! It was {chosen_word} **********************************************")
     
     if "_" not in display:
-        gameOver = True
+        game_over = True
         print("********************************************* Yay, YOU WIN! *********************************************")
         
     print(stages[lives])
